@@ -82,7 +82,7 @@ The Random Forest model achieved an R² score of approximately 0.8786 on the tes
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/Medical-Insurance-Prediction.git
+git clone https://github.com/OrioRiko-09/Medical-Insurance-Prediction
 ```
 
 ### 2. Navigate to the project directory
