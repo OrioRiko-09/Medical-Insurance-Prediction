@@ -8,7 +8,8 @@ The project uses a Random Forest Regression model to predict estimated insurance
 ## ✨ Features
 
 - Predicts estimated medical insurance charges.
-- Interactive web interface using Streamlit.
+- **Interactive What-if Simulator ("Explore What-if Scenarios")** to test how altering Age, BMI, or Smoking status impacts insurance charges with real-time delta and percentage change comparisons.
+- Interactive web interface using Streamlit with split 2-column layout and smooth card pop-in animations.
 - Data exploration and visualization using Pandas, Matplotlib and Seaborn.
 - Data preprocessing and categorical feature encoding.
 - Comparison of multiple regression algorithms.
