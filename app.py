@@ -5,10 +5,7 @@ import pandas as pd
 import streamlit as st
 
 
-# ==========================================
 # PAGE CONFIGURATION
-# ==========================================
-
 st.set_page_config(
     page_title="MediPredict | Insurance Estimator",
     page_icon="🏥",
@@ -16,10 +13,7 @@ st.set_page_config(
 )
 
 
-# ==========================================
 # MODEL LOADING
-# ==========================================
-
 BASE_DIR = Path(__file__).resolve().parent
 MODEL_PATH = BASE_DIR / "models" / "random_forest_model.pkl"
 
@@ -811,18 +805,12 @@ st.markdown(
 left_col, right_col = st.columns([1, 1], gap="large")
 
 with left_col:
-
-    st.markdown(
-        '<div class="section-title">Enter Your Details</div>',
-        unsafe_allow_html=True
-    )
+    st.markdown('<div class="section-title">Enter Your Details</div>', unsafe_allow_html=True)
 
     with st.form("prediction_form"):
-
         col1, col2 = st.columns(2)
 
         with col1:
-
             age = st.number_input(
                 "Age",
                 min_value=18,
@@ -831,10 +819,7 @@ with left_col:
                 step=1
             )
 
-            sex = st.selectbox(
-                "Sex",
-                ["male", "female"]
-            )
+            sex = st.selectbox("Sex",["male", "female"])
 
             bmi = st.number_input(
                 "BMI",
@@ -845,7 +830,6 @@ with left_col:
             )
 
         with col2:
-
             children = st.number_input(
                 "Number of Children",
                 min_value=0,
@@ -854,27 +838,13 @@ with left_col:
                 step=1
             )
 
-            smoker = st.selectbox(
-                "Smoker",
-                ["no", "yes"]
-            )
+            smoker = st.selectbox("Smoker",["no", "yes"])
 
-            region = st.selectbox(
-                "Region",
-                [
-                    "southwest",
-                    "southeast",
-                    "northwest",
-                    "northeast"
-                ]
-            )
+            region = st.selectbox("Region",["southwest", "southeast", "northwest", "northeast"])
 
         st.markdown("<br>", unsafe_allow_html=True)
 
-        submitted = st.form_submit_button(
-            "Calculate Insurance Estimate",
-            use_container_width=True
-        )
+        submitted = st.form_submit_button("Calculate Insurance Estimate", use_container_width=True)
 
     if submitted:
         st.session_state.prediction_count += 1
@@ -919,11 +889,7 @@ with left_col:
 
 
 with right_col:
-
-    st.markdown(
-        '<div class="section-title">Insurance Prediction</div>',
-        unsafe_allow_html=True
-    )
+    st.markdown('<div class="section-title">Insurance Prediction</div>', unsafe_allow_html=True)
 
     if "prediction_count" not in st.session_state:
         st.session_state.prediction_count = 0
@@ -936,26 +902,22 @@ with right_col:
 
         st.markdown(
             f"""<div id="{card_id}" class="result-box {card_id}" style="animation: {anim_name} 0.6s ease;">
-<div style="font-size: 38px; margin-bottom: 8px;">📋</div>
-<p class="result-label" style="color: #347566; font-size: 18px; font-weight: 600; margin: 0 0 10px 0;">Estimated Medical Insurance Charges</p>
-<div class="result-value" style="color: #126B55; font-size: 52px; font-weight: 800; margin: 0 0 15px 0;">${orig_pred:,.2f}</div>
-<div style="color: #205E53; font-size: 14px; font-weight: 500; background: rgba(22, 139, 117, 0.12); padding: 8px 18px; border-radius: 20px; display: inline-block;">
-{orig_info['age']} yrs • {orig_info['sex']} • BMI: {orig_info['bmi']:.1f} • Smoker: {orig_info['smoker']}
-</div>
-</div>""",
-            unsafe_allow_html=True
-        )
+            <div style="font-size: 38px; margin-bottom: 8px;">📋</div>
+            <p class="result-label" style="color: #347566; font-size: 18px; font-weight: 600; margin: 0 0 10px 0;">Estimated Medical Insurance Charges</p>
+            <div class="result-value" style="color: #126B55; font-size: 52px; font-weight: 800; margin: 0 0 15px 0;">${orig_pred:,.2f}</div>
+            <div style="color: #205E53; font-size: 14px; font-weight: 500; background: rgba(22, 139, 117, 0.12); padding: 8px 18px; border-radius: 20px; display: inline-block;">
+            {orig_info['age']} yrs • {orig_info['sex']} • BMI: {orig_info['bmi']:.1f} • Smoker: {orig_info['smoker']}
+            </div>
+            </div>""", unsafe_allow_html=True)
     else:
         st.markdown(
             """<div class="result-placeholder-card">
-<div style="font-size: 44px; margin-bottom: 12px;">🩺</div>
-<h3 style="color: #145B50; font-size: 22px; font-weight: 700; margin: 0 0 10px 0;">Ready for Estimation</h3>
-<p style="color: #347566; font-size: 15px; margin: 0; line-height: 1.5; max-width: 340px;">
-Enter your personal details on the left and click <strong>Calculate Insurance Estimate</strong> to view your predicted charges.
-</p>
-</div>""",
-            unsafe_allow_html=True
-        )
+            <div style="font-size: 44px; margin-bottom: 12px;">🩺</div>
+            <h3 style="color: #145B50; font-size: 22px; font-weight: 700; margin: 0 0 10px 0;">Ready for Estimation</h3>
+            <p style="color: #347566; font-size: 15px; margin: 0; line-height: 1.5; max-width: 340px;">
+            Enter your personal details on the left and click <strong>Calculate Insurance Estimate</strong> to view your predicted charges.
+            </p>
+            </div>""", unsafe_allow_html=True)
 
 
 # ==========================================
@@ -971,15 +933,13 @@ if st.session_state.get("original_prediction") is not None:
     with st.expander("Explore What-if Scenarios", expanded=True):
         st.markdown(
             f"""<div class="scenario-intro">
-Simulate how modifying personal factors (Age, BMI, Smoking status, Number of Children, Region) affects your estimated medical insurance cost while keeping your biological sex constant.
-</div>
-<div class="unchanged-badge">
-<span style="font-weight: 700; color: #145B50;">🔒 Unchanged Profile Detail:</span>
-&nbsp;&nbsp;
-<span>Sex: <strong>{orig['sex'].title()}</strong></span>
-</div>""",
-            unsafe_allow_html=True
-        )
+            Simulate how modifying personal factors (Age, BMI, Smoking status, Number of Children, Region) affects your estimated medical insurance cost while keeping your biological sex constant.
+            </div>
+            <div class="unchanged-badge">
+            <span style="font-weight: 700; color: #145B50;">🔒 Unchanged Profile Detail:</span>
+            &nbsp;&nbsp;
+            <span>Sex: <strong>{orig['sex'].title()}</strong></span>
+            </div>""", unsafe_allow_html=True)
 
         scenario_ver = st.session_state.get("scenario_version", 0)
 
@@ -1038,10 +998,7 @@ Simulate how modifying personal factors (Age, BMI, Smoking status, Number of Chi
 
             st.markdown("<br>", unsafe_allow_html=True)
 
-            whatif_submitted = st.form_submit_button(
-                "Compare Scenario",
-                use_container_width=True
-            )
+            whatif_submitted = st.form_submit_button("Compare Scenario", use_container_width=True)
 
         if whatif_submitted:
             whatif_df = pd.DataFrame(
@@ -1095,56 +1052,46 @@ Simulate how modifying personal factors (Age, BMI, Smoking status, Number of Chi
 
             st.markdown(
                 f"""<div class="{banner_class}">
-<div style="font-size: 28px; margin-right: 14px; line-height: 1;">{icon}</div>
-<div>
-<div style="font-weight: 700; font-size: 17px; margin-bottom: 3px;">{direction_title}</div>
-<div style="font-size: 14px;">{desc}</div>
-</div>
-</div>""",
-                unsafe_allow_html=True
-            )
+                <div style="font-size: 28px; margin-right: 14px; line-height: 1;">{icon}</div>
+                <div>
+                <div style="font-weight: 700; font-size: 17px; margin-bottom: 3px;">{direction_title}</div>
+                <div style="font-size: 14px;">{desc}</div>
+                </div>
+                </div>""", unsafe_allow_html=True)
 
             c1, c2, c3, c4 = st.columns(4)
 
             with c1:
                 st.markdown(
                     f"""<div class="comparison-card">
-<div class="comparison-label">Original Cost</div>
-<div class="comparison-value" style="color: #205E53;">${orig_pred:,.2f}</div>
-<div class="comparison-caption">{orig['age']} yrs • BMI {orig['bmi']:.1f} • Smoker: {orig['smoker']} • Children: {orig['children']} • {orig['region'].title()}</div>
-</div>""",
-                    unsafe_allow_html=True
-                )
+                    <div class="comparison-label">Original Cost</div>
+                    <div class="comparison-value" style="color: #205E53;">${orig_pred:,.2f}</div>
+                    <div class="comparison-caption">{orig['age']} yrs • BMI {orig['bmi']:.1f} • Smoker: {orig['smoker']} • Children: {orig['children']} • {orig['region'].title()}</div>
+                    </div>""", unsafe_allow_html=True)
 
             with c2:
                 st.markdown(
                     f"""<div class="comparison-card">
-<div class="comparison-label">What-if Cost</div>
-<div class="comparison-value" style="color: #126B55;">${whatif_pred:,.2f}</div>
-<div class="comparison-caption">{scen_input['age']} yrs • BMI {scen_input['bmi']:.1f} • Smoker: {scen_input['smoker']} • Children: {scen_input['children']} • {scen_input['region'].title()}</div>
-</div>""",
-                    unsafe_allow_html=True
-                )
+                    <div class="comparison-label">What-if Cost</div>
+                    <div class="comparison-value" style="color: #126B55;">${whatif_pred:,.2f}</div>
+                    <div class="comparison-caption">{scen_input['age']} yrs • BMI {scen_input['bmi']:.1f} • Smoker: {scen_input['smoker']} • Children: {scen_input['children']} • {scen_input['region'].title()}</div>
+                    </div>""", unsafe_allow_html=True)
 
             with c3:
                 st.markdown(
                     f"""<div class="comparison-card">
-<div class="comparison-label">Absolute Difference</div>
-<div class="comparison-value" style="color: {trend_color};">{sign}${abs_diff:,.2f}</div>
-<div class="comparison-caption">vs Original Estimate</div>
-</div>""",
-                    unsafe_allow_html=True
-                )
+                    <div class="comparison-label">Absolute Difference</div>
+                    <div class="comparison-value" style="color: {trend_color};">{sign}${abs_diff:,.2f}</div>
+                    <div class="comparison-caption">vs Original Estimate</div>
+                    </div>""", unsafe_allow_html=True)
 
             with c4:
                 st.markdown(
                     f"""<div class="comparison-card">
-<div class="comparison-label">Percentage Change</div>
-<div class="comparison-value" style="color: {trend_color};">{sign}{abs(pct_change):.2f}%</div>
-<div class="comparison-caption">relative shift</div>
-</div>""",
-                    unsafe_allow_html=True
-                )
+                    <div class="comparison-label">Percentage Change</div>
+                    <div class="comparison-value" style="color: {trend_color};">{sign}{abs(pct_change):.2f}%</div>
+                    <div class="comparison-caption">relative shift</div>
+                    </div>""", unsafe_allow_html=True)
 
 
 # ==========================================
@@ -1155,6 +1102,4 @@ st.markdown(
     """<div class="footer">
     MediPredict | Machine Learning Project<br><br>
     This prediction is for educational purposes only and should not be considered professional financial advice.
-    </div>""",
-    unsafe_allow_html=True
-)
+    </div>""", unsafe_allow_html=True)
